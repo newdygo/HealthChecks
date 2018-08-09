@@ -11,6 +11,13 @@ namespace Microsoft.Extensions.HealthChecks
 
     public static class HealthCheckBuilderSqlServerExtensions
     {
+        public static HealthCheckBuilder AddSqlCheck(this HealthCheckBuilder builder, string name, IDbConnection connection)
+        {
+            Guard.ArgumentNotNull(nameof(builder), builder);
+
+            return AddSqlCheck(builder, name, connection, builder.DefaultCacheDuration);
+        }
+
         public static HealthCheckBuilder AddSqlCheck(this HealthCheckBuilder builder, string name, string connectionString)
         {
             Guard.ArgumentNotNull(nameof(builder), builder);
@@ -33,6 +40,38 @@ namespace Microsoft.Extensions.HealthChecks
                             command.CommandType = CommandType.Text;
                             command.CommandText = "SELECT 1";
                             var result = (int)await command.ExecuteScalarAsync().ConfigureAwait(false);
+                            if (result == 1)
+                            {
+                                return HealthCheckResult.Healthy($"SqlCheck({name}): Healthy");
+                            }
+
+                            return HealthCheckResult.Unhealthy($"SqlCheck({name}): Unhealthy");
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return HealthCheckResult.Unhealthy($"SqlCheck({name}): Exception during check: {ex.GetType().FullName}");
+                }
+            }, cacheDuration);
+
+            return builder;
+        }
+
+        public static HealthCheckBuilder AddSqlCheck(this HealthCheckBuilder builder, string name, IDbConnection connection, TimeSpan cacheDuration)
+        {
+            builder.AddCheck($"SqlCheck({name})", async () =>
+            {
+                try
+                {
+                    //TODO: There is probably a much better way to do this.
+                    using (connection)
+                    {
+                        using (var command = connection.CreateCommand())
+                        {
+                            command.CommandType = CommandType.Text;
+                            command.CommandText = "SELECT 1";
+                            var result = (int)command.ExecuteScalar();
                             if (result == 1)
                             {
                                 return HealthCheckResult.Healthy($"SqlCheck({name}): Healthy");
