@@ -31,7 +31,6 @@ namespace Microsoft.Extensions.HealthChecks
             {
                 try
                 {
-                    //TODO: There is probably a much better way to do this.
                     using (var connection = new SqlConnection(connectionString))
                     {
                         connection.Open();
@@ -60,11 +59,10 @@ namespace Microsoft.Extensions.HealthChecks
 
         public static HealthCheckBuilder AddSqlCheck(this HealthCheckBuilder builder, string name, IDbConnection connection, TimeSpan cacheDuration)
         {
-            builder.AddCheck($"SqlCheck({name})", async () =>
+            builder.AddCheck($"SqlCheck({name})", () =>
             {
                 try
                 {
-                    //TODO: There is probably a much better way to do this.
                     using (connection)
                     {
                         using (var command = connection.CreateCommand())
