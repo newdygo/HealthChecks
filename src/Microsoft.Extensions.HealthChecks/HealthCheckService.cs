@@ -1,30 +1,25 @@
-// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-
 namespace Microsoft.Extensions.HealthChecks
 {
+    using Microsoft.Extensions.DependencyInjection;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
+
     public class HealthCheckService : IHealthCheckService
     {
         private readonly HealthCheckBuilder _builder;
         private readonly IReadOnlyList<HealthCheckGroup> _groups;
         private readonly HealthCheckGroup _root;
         private readonly IServiceProvider _serviceProvider;
-        private readonly IServiceScopeFactory _serviceScopeFactory;
 
-        public HealthCheckService(HealthCheckBuilder builder, IServiceProvider serviceProvider, IServiceScopeFactory serviceScopeFactory)
+        public HealthCheckService(HealthCheckBuilder builder, IServiceProvider serviceProvider)
         {
             _builder = builder;
             _groups = GetGroups().Where(group => group.GroupName != string.Empty).ToList();
             _root = GetGroup(string.Empty);
             _serviceProvider = serviceProvider;
-            _serviceScopeFactory = serviceScopeFactory;
         }
 
         public async Task<CompositeHealthCheckResult> CheckHealthAsync(CancellationToken cancellationToken = default(CancellationToken))
@@ -46,20 +41,15 @@ namespace Microsoft.Extensions.HealthChecks
             }
         }
 
-        public IReadOnlyList<CachedHealthCheck> GetAllChecks()
-            => _builder.ChecksByName.Values.ToList().AsReadOnly();
+        public IReadOnlyList<CachedHealthCheck> GetAllChecks() => _builder.ChecksByName.Values.ToList().AsReadOnly();
 
-        public CachedHealthCheck GetCheck(string checkName)
-            => _builder.ChecksByName[checkName];
+        public CachedHealthCheck GetCheck(string checkName) => _builder.ChecksByName[checkName];
 
-        public HealthCheckGroup GetGroup(string groupName)
-            => _builder.Groups[groupName];
+        public HealthCheckGroup GetGroup(string groupName) => _builder.Groups[groupName];
 
-        public IReadOnlyList<HealthCheckGroup> GetGroups()
-            => _builder.Groups.Values.ToList().AsReadOnly();
+        public IReadOnlyList<HealthCheckGroup> GetGroups() => _builder.Groups.Values.ToList().AsReadOnly();
 
-        private IServiceScope GetServiceScope()
-            => _serviceScopeFactory == null ? new UnscopedServiceProvider(_serviceProvider) : _serviceScopeFactory.CreateScope();
+        private IServiceScope GetServiceScope() => new UnscopedServiceProvider(_serviceProvider);
 
         public async ValueTask<IHealthCheckResult> RunCheckAsync(CachedHealthCheck healthCheck, CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -86,7 +76,9 @@ namespace Microsoft.Extensions.HealthChecks
         public async Task<CompositeHealthCheckResult> RunGroupAsync(HealthCheckGroup group, CancellationToken cancellationToken = default(CancellationToken))
         {
             using (var scope = GetServiceScope())
+            {
                 return await RunGroupAsync(scope.ServiceProvider, group, cancellationToken).ConfigureAwait(false);
+            }   
         }
 
         /// <summary>
@@ -108,12 +100,24 @@ namespace Microsoft.Extensions.HealthChecks
 
         private class UnscopedServiceProvider : IServiceScope
         {
-            public UnscopedServiceProvider(IServiceProvider serviceProvider)
-                => ServiceProvider = serviceProvider;
+            public UnscopedServiceProvider(IServiceProvider serviceProvider) => ServiceProvider = serviceProvider;
 
             public IServiceProvider ServiceProvider { get; }
 
-            public void Dispose() { }
+            public void Dispose()
+            {
+                Dispose(true);
+                GC.SuppressFinalize(this);
+            }
+
+            protected virtual void Dispose(bool disposing)
+            {
+            }
+
+            ~UnscopedServiceProvider()
+            {
+                Dispose(false);
+            }
         }
     }
 }

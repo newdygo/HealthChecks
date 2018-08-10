@@ -1,7 +1,6 @@
 ﻿namespace Microsoft.Extensions.HealthChecks
 {
     using Microsoft.Extensions.HealthChecks.Infra;
-    using Oracle.ManagedDataAccess.Client;
     using System;
     using System.Data;
 
@@ -14,20 +13,25 @@
             return AddOracleCheck(builder, name, connection, builder.DefaultCacheDuration);
         }
 
-        public static HealthCheckBuilder AddOracleCheck(this HealthCheckBuilder builder, string name, IDbConnection connection, TimeSpan cacheDuration)
+        private static HealthCheckBuilder AddOracleCheck(this HealthCheckBuilder builder, string name, IDbConnection connection, TimeSpan cacheDuration)
         {
-            builder.AddCheck($"OracleCheck({name})", async () =>
+            builder.AddCheck($"OracleCheck({name})", () =>
             {
                 try
                 {
-                    using ((OracleConnection)connection)
+                    using (connection)
                     {
-                        using (var command = (OracleCommand)connection.CreateCommand())
+                        if (connection.State != ConnectionState.Open)
+                        {
+                            connection.Open();
+                        }
+
+                        using (var command = connection.CreateCommand())
                         {
                             command.CommandType = CommandType.Text;
                             command.CommandText = "SELECT 1 FROM DUAL";
-                            var result = await command.ExecuteNonQueryAsync();
-                            if (result == 1)
+                            var result = command.ExecuteNonQuery();
+                            if (result == -1)
                             {
                                 return HealthCheckResult.Healthy($"OracleCheck({name}): Healthy");
                             }

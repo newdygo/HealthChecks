@@ -23,8 +23,6 @@ namespace Microsoft.Extensions.HealthChecks.Internal
             _url = url;
         }
 
-        public CheckStatus PartiallyHealthyStatus { get; set; } = CheckStatus.Warning;
-
         public async Task<IHealthCheckResult> CheckAsync()
         {
             using (var httpClient = CreateHttpClient())

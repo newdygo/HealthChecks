@@ -12,6 +12,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Microsoft.Extensions.HealthChecks.Infra\Microsoft.Extensions.HealthChecks.Infra.csproj" />
+    <ProjectReference Include="..\Microsoft.Extensions.HealthChecks.Oracle\Microsoft.Extensions.HealthChecks.Oracle.csproj" />
+    <ProjectReference Include="..\Microsoft.Extensions.HealthChecks.SqlServer\Microsoft.Extensions.HealthChecks.SqlServer.csproj" />
     <ProjectReference Include="..\Microsoft.Extensions.HealthChecks\Microsoft.Extensions.HealthChecks.csproj" />
   </ItemGroup>
 

@@ -21,7 +21,7 @@ namespace Microsoft.Extensions.HealthChecks
                 [string.Empty] = _currentGroup
             };
 
-            DefaultCacheDuration = TimeSpan.FromMinutes(5);
+            DefaultCacheDuration = TimeSpan.FromSeconds(15);
         }
 
         /// <summary>

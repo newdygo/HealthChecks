@@ -1,6 +1,5 @@
 ﻿namespace Microsoft.Extensions.HealthChecks
 {
-    using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.HealthChecks.Infra;
     using System;
 
@@ -18,7 +17,8 @@
             }
         }
         
-        public static void Build(Action<HealthCheckBuilder> buildout, IServiceProvider serviceProvider, IServiceScopeFactory serviceScopeFactory)
+
+        public static void Build(Action<HealthCheckBuilder> buildout)
         {
             HealthGuard.ArgumentNotNull(nameof(buildout), buildout);
             HealthGuard.OperationValid(_service == null, "You may only call Build once.");
@@ -26,7 +26,7 @@
             var builder = new HealthCheckBuilder();
             buildout(builder);
 
-            _service = new HealthCheckService(builder, serviceProvider ?? new NoOpServiceProvider(), serviceScopeFactory);
+            _service = new HealthCheckService(builder, new NoOpServiceProvider());
         }
 
         class NoOpServiceProvider : IServiceProvider
