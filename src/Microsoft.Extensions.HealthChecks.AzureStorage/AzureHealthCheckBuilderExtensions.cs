@@ -23,21 +23,17 @@ namespace Microsoft.Extensions.HealthChecks
         {
             builder.AddCheck($"AzureBlobStorageCheck {storageAccount.BlobStorageUri} {containerName}", async () =>
             {
-                bool result;
+                var result = false;
                 try
                 {
                     var blobClient = storageAccount.CreateCloudBlobClient();
-
-                    var properties = await blobClient.GetServicePropertiesAsync().ConfigureAwait(false);
-
+                    
                     if (!String.IsNullOrWhiteSpace(containerName))
                     {
                         var container = blobClient.GetContainerReference(containerName);
 
                         result = await container.ExistsAsync();
                     }
-
-                    result = true;
                 }
                 catch (Exception)
                 {
@@ -47,6 +43,7 @@ namespace Microsoft.Extensions.HealthChecks
                 return result
                     ? HealthCheckResult.Healthy($"AzureBlobStorage {storageAccount.BlobStorageUri} is available")
                     : HealthCheckResult.Unhealthy($"AzureBlobStorage {storageAccount.BlobStorageUri} is unavailable");
+
             }, cacheDuration ?? builder.DefaultCacheDuration);
 
             return builder;

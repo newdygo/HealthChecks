@@ -1,12 +1,12 @@
-﻿namespace Microsoft.Extensions.HealthChecks.Oracle
+﻿using Oracle.ManagedDataAccess.Client;
+using System;
+using System.Data;
+
+namespace Microsoft.Extensions.HealthChecks
 {
-    using global::Oracle.ManagedDataAccess.Client;
-    using System;
-    using System.Data;
-    
     public static class HealthCheckBuilderOracleExtensions
     {
-        public static HealthCheckBuilder AddSqlCheck(this HealthCheckBuilder builder, string name, IDbConnection connection)
+        public static HealthCheckBuilder AddOracleCheck(this HealthCheckBuilder builder, string name, IDbConnection connection)
         {
             Guard.ArgumentNotNull(nameof(builder), builder);
 
@@ -24,8 +24,8 @@
                         using (var command = (OracleCommand)connection.CreateCommand())
                         {
                             command.CommandType = CommandType.Text;
-                            command.CommandText = "SELECT 1";
-                            var result = (int)await command.ExecuteScalarAsync();
+                            command.CommandText = "SELECT 1 FROM DUAL";
+                            var result = await command.ExecuteNonQueryAsync();
                             if (result == 1)
                             {
                                 return HealthCheckResult.Healthy($"OracleCheck({name}): Healthy");

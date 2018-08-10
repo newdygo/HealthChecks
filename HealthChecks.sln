@@ -3,25 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 15.0.26228.4
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{E05DCF88-F916-4B61-A5DC-A8344C9E2429}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F9BA869A-7D5F-420F-9505-2D881F7934A7}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infra", "Infra", "{F9BA869A-7D5F-420F-9505-2D881F7934A7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Extensions.HealthChecks", "src\Microsoft.Extensions.HealthChecks\Microsoft.Extensions.HealthChecks.csproj", "{26A77B9A-5599-4BBA-8C5C-90DF1A4F4558}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Extensions.HealthChecks.AzureStorage", "src\Microsoft.Extensions.HealthChecks.AzureStorage\Microsoft.Extensions.HealthChecks.AzureStorage.csproj", "{0C4158B7-7153-4D2E-ABFA-4CE07D44F75F}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.AspNetCore.HealthChecks", "src\Microsoft.AspNetCore.HealthChecks\Microsoft.AspNetCore.HealthChecks.csproj", "{A368FA9A-93C8-4F00-A098-E7EEC8462A96}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleHealthChecker.AspNetCore", "samples\SampleHealthChecker.AspNetCore\SampleHealthChecker.AspNetCore.csproj", "{2074E1EA-8744-4FCB-B2A8-436623F6DF7A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Extensions.HealthChecks.SqlServer", "src\Microsoft.Extensions.HealthChecks.SqlServer\Microsoft.Extensions.HealthChecks.SqlServer.csproj", "{13BE838A-200B-4A68-8F58-3EA3BE3A1A8A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.AspNet.HealthChecks", "src\Microsoft.AspNet.HealthChecks\Microsoft.AspNet.HealthChecks.csproj", "{2AE82E1C-6CE1-4755-A332-FA359B7CCE72}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleHealthChecker.AspNet", "samples\SampleHealthChecker.AspNet\SampleHealthChecker.AspNet.csproj", "{33FB5967-62C7-4230-B515-780EF63F748E}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Extensions.HealthChecks.Oracle", "src\Microsoft.Extensions.HealthChecks.Oracle\Microsoft.Extensions.HealthChecks.Oracle.csproj", "{BC92DEB8-412C-4B69-9426-8DA179081161}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{89FF3F16-8DED-421E-A172-FC7F61BFD314}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,26 +29,6 @@ Global
 		{26A77B9A-5599-4BBA-8C5C-90DF1A4F4558}.Release|Any CPU.ActiveCfg = Release|x64
 		{26A77B9A-5599-4BBA-8C5C-90DF1A4F4558}.Release|x64.ActiveCfg = Release|x64
 		{26A77B9A-5599-4BBA-8C5C-90DF1A4F4558}.Release|x64.Build.0 = Release|x64
-		{0C4158B7-7153-4D2E-ABFA-4CE07D44F75F}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{0C4158B7-7153-4D2E-ABFA-4CE07D44F75F}.Debug|x64.ActiveCfg = Debug|x64
-		{0C4158B7-7153-4D2E-ABFA-4CE07D44F75F}.Debug|x64.Build.0 = Debug|x64
-		{0C4158B7-7153-4D2E-ABFA-4CE07D44F75F}.Release|Any CPU.ActiveCfg = Release|x64
-		{0C4158B7-7153-4D2E-ABFA-4CE07D44F75F}.Release|x64.ActiveCfg = Release|x64
-		{0C4158B7-7153-4D2E-ABFA-4CE07D44F75F}.Release|x64.Build.0 = Release|x64
-		{A368FA9A-93C8-4F00-A098-E7EEC8462A96}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{A368FA9A-93C8-4F00-A098-E7EEC8462A96}.Debug|x64.ActiveCfg = Debug|x64
-		{A368FA9A-93C8-4F00-A098-E7EEC8462A96}.Debug|x64.Build.0 = Debug|x64
-		{A368FA9A-93C8-4F00-A098-E7EEC8462A96}.Release|Any CPU.ActiveCfg = Release|x64
-		{A368FA9A-93C8-4F00-A098-E7EEC8462A96}.Release|x64.ActiveCfg = Release|x64
-		{A368FA9A-93C8-4F00-A098-E7EEC8462A96}.Release|x64.Build.0 = Release|x64
-		{2074E1EA-8744-4FCB-B2A8-436623F6DF7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2074E1EA-8744-4FCB-B2A8-436623F6DF7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2074E1EA-8744-4FCB-B2A8-436623F6DF7A}.Debug|x64.ActiveCfg = Debug|x64
-		{2074E1EA-8744-4FCB-B2A8-436623F6DF7A}.Debug|x64.Build.0 = Debug|x64
-		{2074E1EA-8744-4FCB-B2A8-436623F6DF7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2074E1EA-8744-4FCB-B2A8-436623F6DF7A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2074E1EA-8744-4FCB-B2A8-436623F6DF7A}.Release|x64.ActiveCfg = Release|x64
-		{2074E1EA-8744-4FCB-B2A8-436623F6DF7A}.Release|x64.Build.0 = Release|x64
 		{13BE838A-200B-4A68-8F58-3EA3BE3A1A8A}.Debug|Any CPU.ActiveCfg = Debug|x64
 		{13BE838A-200B-4A68-8F58-3EA3BE3A1A8A}.Debug|x64.ActiveCfg = Debug|x64
 		{13BE838A-200B-4A68-8F58-3EA3BE3A1A8A}.Debug|x64.Build.0 = Debug|x64
@@ -69,14 +41,6 @@ Global
 		{2AE82E1C-6CE1-4755-A332-FA359B7CCE72}.Release|Any CPU.ActiveCfg = Release|x64
 		{2AE82E1C-6CE1-4755-A332-FA359B7CCE72}.Release|x64.ActiveCfg = Release|x64
 		{2AE82E1C-6CE1-4755-A332-FA359B7CCE72}.Release|x64.Build.0 = Release|x64
-		{33FB5967-62C7-4230-B515-780EF63F748E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{33FB5967-62C7-4230-B515-780EF63F748E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{33FB5967-62C7-4230-B515-780EF63F748E}.Debug|x64.ActiveCfg = Debug|x64
-		{33FB5967-62C7-4230-B515-780EF63F748E}.Debug|x64.Build.0 = Debug|x64
-		{33FB5967-62C7-4230-B515-780EF63F748E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{33FB5967-62C7-4230-B515-780EF63F748E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{33FB5967-62C7-4230-B515-780EF63F748E}.Release|x64.ActiveCfg = Release|x64
-		{33FB5967-62C7-4230-B515-780EF63F748E}.Release|x64.Build.0 = Release|x64
 		{BC92DEB8-412C-4B69-9426-8DA179081161}.Debug|Any CPU.ActiveCfg = Debug|x64
 		{BC92DEB8-412C-4B69-9426-8DA179081161}.Debug|x64.ActiveCfg = Debug|x64
 		{BC92DEB8-412C-4B69-9426-8DA179081161}.Debug|x64.Build.0 = Debug|x64
@@ -89,12 +53,8 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{26A77B9A-5599-4BBA-8C5C-90DF1A4F4558} = {F9BA869A-7D5F-420F-9505-2D881F7934A7}
-		{0C4158B7-7153-4D2E-ABFA-4CE07D44F75F} = {F9BA869A-7D5F-420F-9505-2D881F7934A7}
-		{A368FA9A-93C8-4F00-A098-E7EEC8462A96} = {F9BA869A-7D5F-420F-9505-2D881F7934A7}
-		{2074E1EA-8744-4FCB-B2A8-436623F6DF7A} = {E05DCF88-F916-4B61-A5DC-A8344C9E2429}
 		{13BE838A-200B-4A68-8F58-3EA3BE3A1A8A} = {F9BA869A-7D5F-420F-9505-2D881F7934A7}
-		{2AE82E1C-6CE1-4755-A332-FA359B7CCE72} = {F9BA869A-7D5F-420F-9505-2D881F7934A7}
-		{33FB5967-62C7-4230-B515-780EF63F748E} = {E05DCF88-F916-4B61-A5DC-A8344C9E2429}
+		{2AE82E1C-6CE1-4755-A332-FA359B7CCE72} = {89FF3F16-8DED-421E-A172-FC7F61BFD314}
 		{BC92DEB8-412C-4B69-9426-8DA179081161} = {F9BA869A-7D5F-420F-9505-2D881F7934A7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
