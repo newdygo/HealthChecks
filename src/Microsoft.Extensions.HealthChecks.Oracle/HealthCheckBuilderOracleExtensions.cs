@@ -1,14 +1,15 @@
-﻿using Oracle.ManagedDataAccess.Client;
-using System;
-using System.Data;
-
-namespace Microsoft.Extensions.HealthChecks
+﻿namespace Microsoft.Extensions.HealthChecks
 {
+    using Microsoft.Extensions.HealthChecks.Infra;
+    using Oracle.ManagedDataAccess.Client;
+    using System;
+    using System.Data;
+
     public static class HealthCheckBuilderOracleExtensions
     {
         public static HealthCheckBuilder AddOracleCheck(this HealthCheckBuilder builder, string name, IDbConnection connection)
         {
-            Guard.ArgumentNotNull(nameof(builder), builder);
+            HealthGuard.ArgumentNotNull(nameof(builder), builder);
 
             return AddOracleCheck(builder, name, connection, builder.DefaultCacheDuration);
         }

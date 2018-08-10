@@ -6,10 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\common\Guard.cs" Link="Internal\Guard.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\..\Microsoft.Extensions.HealthChecks.Infra\Microsoft.Extensions.HealthChecks.Infra.csproj" />
     <ProjectReference Include="..\Microsoft.Extensions.HealthChecks\Microsoft.Extensions.HealthChecks.csproj" />
   </ItemGroup>
 

@@ -1,27 +1,23 @@
-﻿// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
-
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Web;
-using Microsoft.Extensions.HealthChecks;
-using Newtonsoft.Json;
-
-namespace Microsoft.AspNet.HealthChecks
+﻿namespace Microsoft.AspNet.HealthChecks
 {
+    using Microsoft.Extensions.HealthChecks;
+    using Microsoft.Extensions.HealthChecks.Infra;
+    using Newtonsoft.Json;
+    using System;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using System.Web;
+
     public class HealthCheckHandler : HttpTaskAsyncHandler
     {
         private static TimeSpan _timeout = TimeSpan.FromSeconds(10);
-
-        public override bool IsReusable => true;
-
+        
         public static TimeSpan Timeout
         {
             get => _timeout;
             set
             {
-                Guard.ArgumentValid(value > TimeSpan.Zero, nameof(Timeout), "Health check timeout must be a positive time span.");
+                HealthGuard.ArgumentValid(value > TimeSpan.Zero, nameof(Timeout), "Health check timeout must be a positive time span.");
 
                 _timeout = value;
             }

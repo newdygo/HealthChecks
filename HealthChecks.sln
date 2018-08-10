@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Extensions.Health
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{89FF3F16-8DED-421E-A172-FC7F61BFD314}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Extensions.HealthChecks.Infra", "Microsoft.Extensions.HealthChecks.Infra\Microsoft.Extensions.HealthChecks.Infra.csproj", "{7BAABAF4-102B-4E3C-B6D5-6D63138FD794}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,14 @@ Global
 		{BC92DEB8-412C-4B69-9426-8DA179081161}.Release|Any CPU.ActiveCfg = Release|x64
 		{BC92DEB8-412C-4B69-9426-8DA179081161}.Release|x64.ActiveCfg = Release|x64
 		{BC92DEB8-412C-4B69-9426-8DA179081161}.Release|x64.Build.0 = Release|x64
+		{7BAABAF4-102B-4E3C-B6D5-6D63138FD794}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BAABAF4-102B-4E3C-B6D5-6D63138FD794}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BAABAF4-102B-4E3C-B6D5-6D63138FD794}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7BAABAF4-102B-4E3C-B6D5-6D63138FD794}.Debug|x64.Build.0 = Debug|Any CPU
+		{7BAABAF4-102B-4E3C-B6D5-6D63138FD794}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BAABAF4-102B-4E3C-B6D5-6D63138FD794}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BAABAF4-102B-4E3C-B6D5-6D63138FD794}.Release|x64.ActiveCfg = Release|Any CPU
+		{7BAABAF4-102B-4E3C-B6D5-6D63138FD794}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -56,6 +66,7 @@ Global
 		{13BE838A-200B-4A68-8F58-3EA3BE3A1A8A} = {F9BA869A-7D5F-420F-9505-2D881F7934A7}
 		{2AE82E1C-6CE1-4755-A332-FA359B7CCE72} = {89FF3F16-8DED-421E-A172-FC7F61BFD314}
 		{BC92DEB8-412C-4B69-9426-8DA179081161} = {F9BA869A-7D5F-420F-9505-2D881F7934A7}
+		{7BAABAF4-102B-4E3C-B6D5-6D63138FD794} = {F9BA869A-7D5F-420F-9505-2D881F7934A7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2B2B6EDE-5ACC-4EBA-868C-6D841B8B242B}

@@ -1,31 +1,27 @@
-// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
-
-using System;
-using System.Data;
-using System.Data.SqlClient;
-
 namespace Microsoft.Extensions.HealthChecks
 {
-    // REVIEW: What are the appropriate guards for these functions?
-
+    using Microsoft.Extensions.HealthChecks.Infra;
+    using System;
+    using System.Data;
+    using System.Data.SqlClient;
+    
     public static class HealthCheckBuilderSqlServerExtensions
     {
         public static HealthCheckBuilder AddSqlCheck(this HealthCheckBuilder builder, string name, IDbConnection connection)
         {
-            Guard.ArgumentNotNull(nameof(builder), builder);
+            HealthGuard.ArgumentNotNull(nameof(builder), builder);
 
             return AddSqlCheck(builder, name, connection, builder.DefaultCacheDuration);
         }
 
         public static HealthCheckBuilder AddSqlCheck(this HealthCheckBuilder builder, string name, string connectionString)
         {
-            Guard.ArgumentNotNull(nameof(builder), builder);
+            HealthGuard.ArgumentNotNull(nameof(builder), builder);
 
             return AddSqlCheck(builder, name, connectionString, builder.DefaultCacheDuration);
         }
 
-        public static HealthCheckBuilder AddSqlCheck(this HealthCheckBuilder builder, string name, string connectionString, TimeSpan cacheDuration)
+        private static HealthCheckBuilder AddSqlCheck(this HealthCheckBuilder builder, string name, string connectionString, TimeSpan cacheDuration)
         {
             builder.AddCheck($"SqlCheck({name})", async () =>
             {
@@ -57,7 +53,7 @@ namespace Microsoft.Extensions.HealthChecks
             return builder;
         }
 
-        public static HealthCheckBuilder AddSqlCheck(this HealthCheckBuilder builder, string name, IDbConnection connection, TimeSpan cacheDuration)
+        private static HealthCheckBuilder AddSqlCheck(this HealthCheckBuilder builder, string name, IDbConnection connection, TimeSpan cacheDuration)
         {
             builder.AddCheck($"SqlCheck({name})", () =>
             {
