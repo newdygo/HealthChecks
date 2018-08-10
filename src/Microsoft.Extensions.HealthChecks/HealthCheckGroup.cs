@@ -1,6 +1,7 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using Microsoft.Extensions.HealthChecks.Infra;
 using System.Collections.Generic;
 
 namespace Microsoft.Extensions.HealthChecks
@@ -11,7 +12,7 @@ namespace Microsoft.Extensions.HealthChecks
 
         public HealthCheckGroup(string groupName, CheckStatus partialSuccessStatus)
         {
-            Guard.ArgumentNotNull(nameof(groupName), groupName);
+            HealthGuard.ArgumentNotNull(nameof(groupName), groupName);
 
             GroupName = groupName;
             PartiallyHealthyStatus = partialSuccessStatus;
@@ -28,7 +29,7 @@ namespace Microsoft.Extensions.HealthChecks
             get => _partialSuccessStatus;
             internal set
             {
-                Guard.ArgumentValid(value != CheckStatus.Unknown, nameof(value), "Check status 'Unknown' is not valid for partial success.");
+                HealthGuard.ArgumentValid(value != CheckStatus.Unknown, nameof(value), "Check status 'Unknown' is not valid for partial success.");
 
                 _partialSuccessStatus = value;
             }

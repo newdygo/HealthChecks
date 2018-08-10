@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.HealthChecks.Infra;
 
 namespace Microsoft.Extensions.HealthChecks
 {
@@ -17,8 +18,8 @@ namespace Microsoft.Extensions.HealthChecks
 
         public CachedHealthCheck(string name, TimeSpan cacheDuration)
         {
-            Guard.ArgumentNotNullOrEmpty(nameof(name), name);
-            Guard.ArgumentValid(cacheDuration.TotalMilliseconds >= 0, nameof(cacheDuration), "Cache duration must be zero (disabled) or greater than zero.");
+            HealthGuard.ArgumentNotNullOrEmpty(nameof(name), name);
+            HealthGuard.ArgumentValid(cacheDuration.TotalMilliseconds >= 0, nameof(cacheDuration), "Cache duration must be zero (disabled) or greater than zero.");
 
             Name = name;
             CacheDuration = cacheDuration;
@@ -72,34 +73,34 @@ namespace Microsoft.Extensions.HealthChecks
 
         public static CachedHealthCheck FromHealthCheck(string name, TimeSpan cacheDuration, IHealthCheck healthCheck)
         {
-            Guard.ArgumentNotNull(nameof(healthCheck), healthCheck);
+            HealthGuard.ArgumentNotNull(nameof(healthCheck), healthCheck);
 
-            return new TypeOrHealthCheck_HealthCheck(name, cacheDuration, healthCheck);
+            return new TypeOrHealthCheckHealthCheck(name, cacheDuration, healthCheck);
         }
 
         public static CachedHealthCheck FromType(string name, TimeSpan cacheDuration, Type healthCheckType)
         {
-            Guard.ArgumentNotNull(nameof(healthCheckType), healthCheckType);
-            Guard.ArgumentValid(HealthCheckTypeInfo.IsAssignableFrom(healthCheckType.GetTypeInfo()), nameof(healthCheckType), $"Health check must implement '{typeof(IHealthCheck).FullName}'.");
+            HealthGuard.ArgumentNotNull(nameof(healthCheckType), healthCheckType);
+            HealthGuard.ArgumentValid(HealthCheckTypeInfo.IsAssignableFrom(healthCheckType.GetTypeInfo()), nameof(healthCheckType), $"Health check must implement '{typeof(IHealthCheck).FullName}'.");
 
-            return new TypeOrHealthCheck_Type(name, cacheDuration, healthCheckType);
+            return new TypeOrHealthCheckType(name, cacheDuration, healthCheckType);
         }
 
-        class TypeOrHealthCheck_HealthCheck : CachedHealthCheck
+        class TypeOrHealthCheckHealthCheck : CachedHealthCheck
         {
             private readonly IHealthCheck _healthCheck;
 
-            public TypeOrHealthCheck_HealthCheck(string name, TimeSpan cacheDuration, IHealthCheck healthCheck) : base(name, cacheDuration)
+            public TypeOrHealthCheckHealthCheck(string name, TimeSpan cacheDuration, IHealthCheck healthCheck) : base(name, cacheDuration)
                 => _healthCheck = healthCheck;
 
             protected override IHealthCheck Resolve(IServiceProvider serviceProvider) => _healthCheck;
         }
 
-        class TypeOrHealthCheck_Type : CachedHealthCheck
+        class TypeOrHealthCheckType : CachedHealthCheck
         {
             private readonly Type _healthCheckType;
 
-            public TypeOrHealthCheck_Type(string name, TimeSpan cacheDuration, Type healthCheckType) : base(name, cacheDuration)
+            public TypeOrHealthCheckType(string name, TimeSpan cacheDuration, Type healthCheckType) : base(name, cacheDuration)
                 => _healthCheckType = healthCheckType;
 
             protected override IHealthCheck Resolve(IServiceProvider serviceProvider)

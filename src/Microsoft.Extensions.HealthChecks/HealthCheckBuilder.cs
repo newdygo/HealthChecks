@@ -1,6 +1,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using Microsoft.Extensions.HealthChecks.Infra;
 using System;
 using System.Collections.Generic;
 
@@ -29,8 +30,8 @@ namespace Microsoft.Extensions.HealthChecks
         /// </summary>
         public HealthCheckBuilder(HealthCheckBuilder rootBuilder, HealthCheckGroup currentGroup)
         {
-            Guard.ArgumentNotNull(nameof(rootBuilder), rootBuilder);
-            Guard.ArgumentNotNull(nameof(currentGroup), currentGroup);
+            HealthGuard.ArgumentNotNull(nameof(rootBuilder), rootBuilder);
+            HealthGuard.ArgumentNotNull(nameof(currentGroup), currentGroup);
 
             _checksByName = rootBuilder._checksByName;
             _currentGroup = currentGroup;
@@ -60,8 +61,8 @@ namespace Microsoft.Extensions.HealthChecks
         /// </summary>
         public HealthCheckBuilder AddCheck<TCheck>(string checkName, TimeSpan cacheDuration) where TCheck : class, IHealthCheck
         {
-            Guard.ArgumentNotNullOrEmpty(nameof(checkName), checkName);
-            Guard.ArgumentValid(!_checksByName.ContainsKey(checkName), nameof(checkName), $"A check with name '{checkName}' has already been registered.");
+            HealthGuard.ArgumentNotNullOrEmpty(nameof(checkName), checkName);
+            HealthGuard.ArgumentValid(!_checksByName.ContainsKey(checkName), nameof(checkName), $"A check with name '{checkName}' has already been registered.");
 
             var namedCheck = CachedHealthCheck.FromType(checkName, cacheDuration, typeof(TCheck));
 
@@ -76,9 +77,9 @@ namespace Microsoft.Extensions.HealthChecks
         /// </summary>
         public HealthCheckBuilder AddCheck(string checkName, IHealthCheck check, TimeSpan cacheDuration)
         {
-            Guard.ArgumentNotNullOrEmpty(nameof(checkName), checkName);
-            Guard.ArgumentNotNull(nameof(check), check);
-            Guard.ArgumentValid(!_checksByName.ContainsKey(checkName), nameof(checkName), $"A check with name '{checkName}' has already been registered.");
+            HealthGuard.ArgumentNotNullOrEmpty(nameof(checkName), checkName);
+            HealthGuard.ArgumentNotNull(nameof(check), check);
+            HealthGuard.ArgumentValid(!_checksByName.ContainsKey(checkName), nameof(checkName), $"A check with name '{checkName}' has already been registered.");
 
             var namedCheck = CachedHealthCheck.FromHealthCheck(checkName, cacheDuration, check);
 
@@ -102,11 +103,11 @@ namespace Microsoft.Extensions.HealthChecks
         /// </summary>
         public HealthCheckBuilder AddHealthCheckGroup(string groupName, Action<HealthCheckBuilder> groupChecks, CheckStatus partialSuccessStatus)
         {
-            Guard.ArgumentNotNullOrEmpty(nameof(groupName), groupName);
-            Guard.ArgumentNotNull(nameof(groupChecks), groupChecks);
-            Guard.ArgumentValid(partialSuccessStatus != CheckStatus.Unknown, nameof(partialSuccessStatus), "Check status 'Unknown' is not valid for partial success.");
-            Guard.ArgumentValid(!_groups.ContainsKey(groupName), nameof(groupName), $"A group with name '{groupName}' has already been registered.");
-            Guard.OperationValid(_currentGroup.GroupName == string.Empty, "Nested groups are not supported by HealthCheckBuilder.");
+            HealthGuard.ArgumentNotNullOrEmpty(nameof(groupName), groupName);
+            HealthGuard.ArgumentNotNull(nameof(groupChecks), groupChecks);
+            HealthGuard.ArgumentValid(partialSuccessStatus != CheckStatus.Unknown, nameof(partialSuccessStatus), "Check status 'Unknown' is not valid for partial success.");
+            HealthGuard.ArgumentValid(!_groups.ContainsKey(groupName), nameof(groupName), $"A group with name '{groupName}' has already been registered.");
+            HealthGuard.OperationValid(_currentGroup.GroupName == string.Empty, "Nested groups are not supported by HealthCheckBuilder.");
 
             var group = new HealthCheckGroup(groupName, partialSuccessStatus);
             _groups.Add(groupName, group);
@@ -119,7 +120,7 @@ namespace Microsoft.Extensions.HealthChecks
 
         public HealthCheckBuilder WithDefaultCacheDuration(TimeSpan duration)
         {
-            Guard.ArgumentValid(duration >= TimeSpan.Zero, nameof(duration), "Duration must be zero (disabled) or a positive duration.");
+            HealthGuard.ArgumentValid(duration >= TimeSpan.Zero, nameof(duration), "Duration must be zero (disabled) or a positive duration.");
 
             DefaultCacheDuration = duration;
             return this;

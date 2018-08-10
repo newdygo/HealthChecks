@@ -11,7 +11,15 @@
                 throw new ArgumentNullException(argumentName);
             }
         }
-        
+
+        public static void ArgumentNotNullOrEmpty(string argumentName, string value)
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                throw new ArgumentException("Value cannot be an empty string.", argumentName);
+            }
+        }
+
         public static void ArgumentValid(bool valid, string argumentName, string exceptionMessage)
         {
             if (!valid)

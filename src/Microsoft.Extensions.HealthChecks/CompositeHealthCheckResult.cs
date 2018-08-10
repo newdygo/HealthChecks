@@ -1,6 +1,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using Microsoft.Extensions.HealthChecks.Infra;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -68,17 +69,17 @@ namespace Microsoft.Extensions.HealthChecks
 
         public void Add(string name, CheckStatus status, string description, Dictionary<string, object> data)
         {
-            Guard.ArgumentNotNullOrEmpty(nameof(name), name);
-            Guard.ArgumentValid(status != CheckStatus.Unknown, nameof(status), "Cannot add 'Unknown' status to composite health check result.");
-            Guard.ArgumentNotNullOrEmpty(nameof(description), description);
+            HealthGuard.ArgumentNotNullOrEmpty(nameof(name), name);
+            HealthGuard.ArgumentValid(status != CheckStatus.Unknown, nameof(status), "Cannot add 'Unknown' status to composite health check result.");
+            HealthGuard.ArgumentNotNullOrEmpty(nameof(description), description);
 
             _results.Add(name, HealthCheckResult.FromStatus(status, description, data));
         }
 
         public void Add(string name, IHealthCheckResult checkResult)
         {
-            Guard.ArgumentNotNullOrEmpty(nameof(name), name);
-            Guard.ArgumentNotNull(nameof(checkResult), checkResult);
+            HealthGuard.ArgumentNotNullOrEmpty(nameof(name), name);
+            HealthGuard.ArgumentNotNull(nameof(checkResult), checkResult);
 
             _results.Add(name, checkResult);
         }

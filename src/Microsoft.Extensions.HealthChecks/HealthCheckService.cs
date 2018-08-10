@@ -1,6 +1,7 @@
 namespace Microsoft.Extensions.HealthChecks
 {
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.HealthChecks.Infra;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -64,8 +65,8 @@ namespace Microsoft.Extensions.HealthChecks
         /// </summary>
         public ValueTask<IHealthCheckResult> RunCheckAsync(IServiceProvider serviceProvider, CachedHealthCheck healthCheck, CancellationToken cancellationToken = default(CancellationToken))
         {
-            Guard.ArgumentNotNull(nameof(serviceProvider), serviceProvider);
-            Guard.ArgumentNotNull(nameof(healthCheck), healthCheck);
+            HealthGuard.ArgumentNotNull(nameof(serviceProvider), serviceProvider);
+            HealthGuard.ArgumentNotNull(nameof(healthCheck), healthCheck);
 
             return healthCheck.RunAsync(serviceProvider, cancellationToken);
         }

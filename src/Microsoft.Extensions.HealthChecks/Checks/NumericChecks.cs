@@ -1,6 +1,7 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using Microsoft.Extensions.HealthChecks.Infra;
 using System;
 using System.Collections.Generic;
 
@@ -12,7 +13,7 @@ namespace Microsoft.Extensions.HealthChecks
 
         public static HealthCheckBuilder AddMinValueCheck<T>(this HealthCheckBuilder builder, string name, T minValue, Func<T> currentValueFunc) where T : IComparable<T>
         {
-            Guard.ArgumentNotNull(nameof(builder), builder);
+            HealthGuard.ArgumentNotNull(nameof(builder), builder);
 
             return AddMinValueCheck(builder, name, minValue, currentValueFunc, builder.DefaultCacheDuration);
         }
@@ -20,9 +21,9 @@ namespace Microsoft.Extensions.HealthChecks
         public static HealthCheckBuilder AddMinValueCheck<T>(this HealthCheckBuilder builder, string name, T minValue, Func<T> currentValueFunc, TimeSpan cacheDuration)
             where T : IComparable<T>
         {
-            Guard.ArgumentNotNull(nameof(builder), builder);
-            Guard.ArgumentNotNullOrEmpty(nameof(name), name);
-            Guard.ArgumentNotNull(nameof(currentValueFunc), currentValueFunc);
+            HealthGuard.ArgumentNotNull(nameof(builder), builder);
+            HealthGuard.ArgumentNotNullOrEmpty(nameof(name), name);
+            HealthGuard.ArgumentNotNull(nameof(currentValueFunc), currentValueFunc);
 
             builder.AddCheck(name, () =>
             {
@@ -40,7 +41,7 @@ namespace Microsoft.Extensions.HealthChecks
 
         public static HealthCheckBuilder AddMaxValueCheck<T>(this HealthCheckBuilder builder, string name, T maxValue, Func<T> currentValueFunc) where T : IComparable<T>
         {
-            Guard.ArgumentNotNull(nameof(builder), builder);
+            HealthGuard.ArgumentNotNull(nameof(builder), builder);
 
             return AddMaxValueCheck(builder, name, maxValue, currentValueFunc, builder.DefaultCacheDuration);
         }
@@ -48,9 +49,9 @@ namespace Microsoft.Extensions.HealthChecks
         public static HealthCheckBuilder AddMaxValueCheck<T>(this HealthCheckBuilder builder, string name, T maxValue, Func<T> currentValueFunc, TimeSpan cacheDuration)
             where T : IComparable<T>
         {
-            Guard.ArgumentNotNull(nameof(builder), builder);
-            Guard.ArgumentNotNullOrEmpty(nameof(name), name);
-            Guard.ArgumentNotNull(nameof(currentValueFunc), currentValueFunc);
+            HealthGuard.ArgumentNotNull(nameof(builder), builder);
+            HealthGuard.ArgumentNotNullOrEmpty(nameof(name), name);
+            HealthGuard.ArgumentNotNull(nameof(currentValueFunc), currentValueFunc);
 
             builder.AddCheck(name, () =>
             {
